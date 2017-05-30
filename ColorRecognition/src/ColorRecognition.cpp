@@ -1,3 +1,11 @@
+/*
+*	@author:		Darlan Alves Jurak
+*	@date:			17 may 2017
+*	@brief:			Change red color in a image to white and any other color to black.
+* 	@limitation:	Fixed range.
+*	@improve:		1 - Identify other colors;
+*					2 -	Image as input arg. 
+*/
 #include <iostream>
 
 #include <opencv2/opencv.hpp>

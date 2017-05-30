@@ -1,5 +1,4 @@
 all:
-	#g++ -o ./bin/ImageRecognition ./src/ImageRecognition.cpp 
-	g++ ./src/ImageRecognition.cpp -o ./bin/ImageRecognition `pkg-config --cflags --libs opencv`
+	g++ ./src/ColorRecognition.cpp -o ./bin/ColorRecognition `pkg-config --cflags --libs opencv`
 clean:
 	#rm -f server client
