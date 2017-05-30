@@ -4,7 +4,6 @@
 *	@brief:			Change red color in a image to white and any other color to black.
 * 	@limitation:	Fixed range.
 *	@improve:		1 - Identify other colors;
-*					2 -	Image as input arg. 
 */
 #include <iostream>
 
@@ -15,9 +14,24 @@
 using namespace cv;
 using namespace std;
 
-int main(){
+int main(int argc, char* argv[]){
 
-	Mat image = imread("repo/img/RedBall.png", 1);
+	string	imagePath;
+
+	if ( argc == 1 ) // No argument
+	{
+
+		cout 	<< "Next time you can run this app passing a image path as argument." << endl;
+		cout 	<< "Insert a image path: " << endl;
+		cin 	>> imagePath;
+
+	}else{ // Probably a image path argument	
+
+		imagePath = argv[1];
+
+	}
+	
+	Mat image = imread(imagePath, 1);
 	namedWindow("Image", CV_WINDOW_FREERATIO);
 	imshow("Image", image);
 	waitKey(0);
@@ -29,9 +43,6 @@ int main(){
 	namedWindow("Output", CV_WINDOW_FREERATIO);
 	imshow("Output", outputImg);
 	waitKey(0);
-
-	cout << "Hello World" << endl;
-
 
 	return 0;
 }
