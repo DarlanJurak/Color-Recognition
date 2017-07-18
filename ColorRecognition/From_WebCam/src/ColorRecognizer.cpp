@@ -5,6 +5,27 @@
 using namespace cv;
 using namespace std;
 
+int mask_removeBlackNavy_iLowH 	= 0;
+int mask_removeBlackNavy_iHighH = 104;
+int mask_removeBlackNavy_iLowS 	= 0; 
+int mask_removeBlackNavy_iHighS = 255;
+int mask_removeBlackNavy_iLowV 	= 0;
+int mask_removeBlackNavy_iHighV = 255;
+
+int mask_highBrightRubikCubeBlue_iLowH 	= 95;
+int mask_highBrightRubikCubeBlue_iHighH = 126;
+int mask_highBrightRubikCubeBlue_iLowS 	= 63; 
+int mask_highBrightRubikCubeBlue_iHighS = 186;
+int mask_highBrightRubikCubeBlue_iLowV 	= 114;
+int mask_highBrightRubikCubeBlue_iHighV = 255;
+
+int mask_highBrightRubikCubeGreen_iLowH 	= 45;
+int mask_highBrightRubikCubeGreen_iHighH 	= 69;
+int mask_highBrightRubikCubeGreen_iLowS 	= 49; 
+int mask_highBrightRubikCubeGreen_iHighS 	= 111;
+int mask_highBrightRubikCubeGreen_iLowV 	= 112;
+int mask_highBrightRubikCubeGreen_iHighV 	= 151;
+
  int main( int argc, char** argv )
  {
     VideoCapture cap(0); //capture the video from web cam
@@ -48,7 +69,7 @@ using namespace std;
              break;
         }
 
-		 Mat imgHSV;
+		Mat imgHSV;
 
 		cvtColor(imgOriginal, imgHSV, COLOR_BGR2HSV); //Convert the captured frame from BGR to HSV
 	
@@ -57,15 +78,32 @@ using namespace std;
 		inRange(imgHSV, Scalar(iLowH, iLowS, iLowV), Scalar(iHighH, iHighS, iHighV), imgThresholded); //Threshold the image
       
 		//morphological opening (removes small objects from the foreground)
-		erode(imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)) );
-		dilate( imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)) ); 
+		erode (imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+		dilate(imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5))); 
 
 		//morphological closing (removes small holes from the foreground)
-		dilate( imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)) ); 
-		erode(imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)) );
+		dilate(imgThresholded, 	imgThresholded,	getStructuringElement(MORPH_ELLIPSE, Size(5, 5))); 
+		erode (imgThresholded, 	imgThresholded,	getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
 
-		imshow("Thresholded Image", imgThresholded); //show the thresholded image
-		imshow("Original", imgOriginal); //show the original image
+		Mat bitWisedImage, mask;
+		int mask_iLowH 	= iLowH;
+		int mask_iHighH = iHighH;
+
+		int mask_iLowS 	= iLowS; 
+		int mask_iHighS = iHighS;
+
+		int mask_iLowV 	= iLowV;
+		int mask_iHighV = iHighV;
+
+		//Creates mask. Bounds defines chased color.
+		inRange(imgHSV, Scalar(mask_iLowH, mask_iLowS, mask_iLowV), Scalar(mask_iHighH, mask_iHighS, mask_iHighV), mask);
+		bitwise_and(imgOriginal, imgOriginal, bitWisedImage, mask);
+
+		imshow("Thresholded Image", imgThresholded); 	//show the thresholded image
+		imshow("Original", 			imgOriginal); 		//show the original image
+		imshow("HSV Image", 		imgHSV); 			//show the HSV image
+		imshow("Bitwised Image", 	bitWisedImage); 	//show the Filtered image
+
 
         if (waitKey(30) == 27) //wait for 'esc' key press for 30ms. If 'esc' key is pressed, break loop
        {
