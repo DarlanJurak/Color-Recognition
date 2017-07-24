@@ -1,33 +1,15 @@
 #include <iostream>
+#include <typeinfo>
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
+#include "../include/color_recognizer_pkg.h"
 
 using namespace cv;
 using namespace std;
 
-int mask_removeBlackNavy_iLowH 	= 0;
-int mask_removeBlackNavy_iHighH = 104;
-int mask_removeBlackNavy_iLowS 	= 0; 
-int mask_removeBlackNavy_iHighS = 255;
-int mask_removeBlackNavy_iLowV 	= 0;
-int mask_removeBlackNavy_iHighV = 255;
 
-int mask_highBrightRubikCubeBlue_iLowH 	= 95;
-int mask_highBrightRubikCubeBlue_iHighH = 126;
-int mask_highBrightRubikCubeBlue_iLowS 	= 63; 
-int mask_highBrightRubikCubeBlue_iHighS = 186;
-int mask_highBrightRubikCubeBlue_iLowV 	= 114;
-int mask_highBrightRubikCubeBlue_iHighV = 255;
-
-int mask_highBrightRubikCubeGreen_iLowH 	= 45;
-int mask_highBrightRubikCubeGreen_iHighH 	= 69;
-int mask_highBrightRubikCubeGreen_iLowS 	= 49; 
-int mask_highBrightRubikCubeGreen_iHighS 	= 111;
-int mask_highBrightRubikCubeGreen_iLowV 	= 112;
-int mask_highBrightRubikCubeGreen_iHighV 	= 151;
-
- int main( int argc, char** argv )
- {
+int main( int argc, char** argv )
+{
     VideoCapture cap(0); //capture the video from web cam
 
     if ( !cap.isOpened() )  // if not success, exit program
@@ -86,14 +68,19 @@ int mask_highBrightRubikCubeGreen_iHighV 	= 151;
 		erode (imgThresholded, 	imgThresholded,	getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
 
 		Mat bitWisedImage, mask;
-		int mask_iLowH 	= iLowH;
-		int mask_iHighH = iHighH;
+		int mask_iLowH 	= mask_highBrightRubikCubeYellow_iLowH;
+		int mask_iHighH = mask_highBrightRubikCubeYellow_iHighH;
+		int mask_iLowS 	= mask_highBrightRubikCubeYellow_iLowS; 
+		int mask_iHighS = mask_highBrightRubikCubeYellow_iHighS;
+		int mask_iLowV 	= mask_highBrightRubikCubeYellow_iLowV;
+		int mask_iHighV = mask_highBrightRubikCubeYellow_iHighV;
 
-		int mask_iLowS 	= iLowS; 
-		int mask_iHighS = iHighS;
-
-		int mask_iLowV 	= iLowV;
-		int mask_iHighV = iHighV;
+		// int mask_iLowH 	= iLowH;
+		// int mask_iHighH = iHighH;
+		// int mask_iLowS 	= iLowS; 
+		// int mask_iHighS = iHighS;
+		// int mask_iLowV 	= iLowV;
+		// int mask_iHighV = iHighV;
 
 		//Creates mask. Bounds defines chased color.
 		inRange(imgHSV, Scalar(mask_iLowH, mask_iLowS, mask_iLowV), Scalar(mask_iHighH, mask_iHighS, mask_iHighV), mask);
@@ -104,12 +91,44 @@ int mask_highBrightRubikCubeGreen_iHighV 	= 151;
 		imshow("HSV Image", 		imgHSV); 			//show the HSV image
 		imshow("Bitwised Image", 	bitWisedImage); 	//show the Filtered image
 
+		Vec3d pix;
+        double hue;
+		double sat;
+		double val;
 
-        if (waitKey(30) == 27) //wait for 'esc' key press for 30ms. If 'esc' key is pressed, break loop
-       {
+		for( int i = 0; i < bitWisedImage.rows; i++){
+			for( int j = 0; j < bitWisedImage.cols; j++){
+
+				pix = bitWisedImage.at<typeof(pix)>(i,j);
+				hue = pix.val[0];
+				sat = pix.val[1];
+				val = pix.val[2];
+
+				if( (hue > 1) && (sat > 1) && (val > 1)){
+
+					cout << "Hue: " << hue << ". Sat: " << sat << ". Val: " << val << "." << endl;
+				}
+			}				
+		}
+	    
+	   
+    	if (waitKey(30) == 27) //wait for 'esc' key press for 30ms. If 'esc' key is pressed, break loop
+      	{
             cout << "esc key is pressed by user" << endl;
+
+			// cout << "\nCanais: " << bitWisedImage.channels() << "\nLinhas: " << bitWisedImage.rows << "\nColunas: " << bitWisedImage.cols << endl;
+
+            // Show last pixel info
+			pix	= bitWisedImage.at<typeof(pix)>(bitWisedImage.rows -1, bitWisedImage.cols -1);
+			hue = pix.val[0];
+			sat = pix.val[1];
+			val = pix.val[2];
+
+			cout << "\nHue: " << hue << "\nSat: " << sat << "\nVal: " << val << endl;
+
             break; 
-       }
+       	}
+
     }
 
    return 0;
