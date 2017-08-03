@@ -1,6 +1,6 @@
 /*
 *	@author:		Darlan Alves Jurak
-*	@date:			17 may 2017
+*	@created:		17 may 2017
 *	@brief:			Change red color in a image to white and any other color to black.
 * 	@limitation:	Fixed range.
 *	@improve:		1 - Identify other colors;
@@ -15,6 +15,8 @@ using namespace cv;
 using namespace std;
 
 int main(int argc, char* argv[]){
+
+	//--------------------- Input Parameter ------------------------------------------------------
 
 	string	imagePath;
 
@@ -31,12 +33,18 @@ int main(int argc, char* argv[]){
 
 	}
 	
+	//--------------------- Load Original Image---------------------------------------------------
+
 	// Original image
 	Mat imgOriginal = imread(imagePath, 1);
+
+	//--------------------- Conversion to HSV image ----------------------------------------------
 
 	// HSV format image
 	Mat imgHSV;
 	cvtColor(imgOriginal, imgHSV, COLOR_BGR2HSV); //Convert the captured frame from BGR to HSV
+
+	//--------------------- Build Image Mask for specific color ----------------------------------
 
 	// Image mask
 	Mat mask;
@@ -64,6 +72,8 @@ int main(int argc, char* argv[]){
 	// Creates masked image
 	bitwise_and(imgOriginal, imgOriginal, imgMasked, imgMask);
 
+	//--------------------- Windows Creation ------------------------------------------------------
+
 	namedWindow("Original_Image", CV_WINDOW_FREERATIO);
 	imshow("Original_Image", imgOriginal);
 	waitKey(0);
@@ -79,6 +89,8 @@ int main(int argc, char* argv[]){
 	namedWindow("BW_Image", CV_WINDOW_FREERATIO);
 	imshow("BW_Image", imgMasked);
 	waitKey(0);
+
+	//--------------------- Color Detection ------------------------------------------------------
 
 	Vec3d  pix;
     double hue;

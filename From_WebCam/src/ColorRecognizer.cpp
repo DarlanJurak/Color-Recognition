@@ -18,6 +18,8 @@ int main( int argc, char** argv )
          return -1;
     }
 
+    //--- Trackbars ---------------------------------------------------------------//
+
     namedWindow("Control",CV_WINDOW_AUTOSIZE); //create a window called "Control"
 
 	int iLowH = 0;
@@ -38,6 +40,8 @@ int main( int argc, char** argv )
 
 	cvCreateTrackbar("LowV", "Control", &iLowV, 255);//Value (0 - 255)
 	cvCreateTrackbar("HighV", "Control", &iHighV, 255);
+
+	//--- Video Processing --------------------------------------------------------//
 
     while (true)
     {
