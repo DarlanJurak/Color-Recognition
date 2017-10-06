@@ -104,10 +104,10 @@ int main( int argc, char** argv )
 				sat = pix.val[1];
 				val = pix.val[2];
 
-				if( (hue > 1) && (sat > 1) && (val > 1)){
+				// if( (hue > 1) && (sat > 1) && (val > 1)){
 
-					cout << "Hue: " << hue << ". Sat: " << sat << ". Val: " << val << "." << endl;
-				}
+				// 	cout << "Hue: " << hue << ". Sat: " << sat << ". Val: " << val << "." << endl;
+				// }
 			}				
 		}
 	    

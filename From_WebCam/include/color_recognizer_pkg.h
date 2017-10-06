@@ -25,3 +25,10 @@ int mask_highBrightRubikCubeYellow_iLowS 	= 134;
 int mask_highBrightRubikCubeYellow_iHighS 	= 201;
 int mask_highBrightRubikCubeYellow_iLowV 	= 135;
 int mask_highBrightRubikCubeYellow_iHighV 	= 207;
+
+int mask_nubank_card_iLowH 	= 84;
+int mask_nubank_card_iHighH	= 161;
+int mask_nubank_card_iLowS 	= 38; 
+int mask_nubank_card_iHighS	= 193;
+int mask_nubank_card_iLowV 	= 48;
+int mask_nubank_card_iHighV	= 101;
