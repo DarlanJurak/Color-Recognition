@@ -88,7 +88,6 @@ int main( int argc, char** argv )
 		inRange(imgHSV, Scalar(mask_iLowH, mask_iLowS, mask_iLowV), Scalar(mask_iHighH, mask_iHighS, mask_iHighV), imgThresholded);
 
 		// inRange(imgHSV, Scalar(iLowH, iLowS, iLowV), Scalar(iHighH, iHighS, iHighV), imgThresholded); //Threshold the image
-]
 
 
       	//--- Morphological changes ----------------------------------------------//
