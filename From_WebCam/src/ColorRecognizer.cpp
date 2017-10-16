@@ -1,3 +1,9 @@
+/*
+*	@author:		Darlan Alves Jurak
+*	@created:		17 may 2017
+*	@brief:			Recognize a color.
+*/
+
 #include <iostream>
 #include <typeinfo>
 #include "opencv2/highgui/highgui.hpp"
