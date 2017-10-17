@@ -153,7 +153,7 @@ int main( int argc, char** argv )
 
 		//--- Show Filtered image ------------------------------------------------//
 
-		imshow("Bitwised Image", 	bitWisedImage); 	//show the Filtered image
+		//imshow("Bitwised Image", 	bitWisedImage); 	//show the Filtered image
 
 
 
